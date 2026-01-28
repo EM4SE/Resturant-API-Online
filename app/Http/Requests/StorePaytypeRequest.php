@@ -14,7 +14,7 @@ class StorePaytypeRequest extends FormRequest
     public function rules()
     {
         return [
-            'PaymentID'     => 'unique:paytypes,PaytypeID',
+            'PaymentID'     => 'unique:paytypes,PaymentID',
             'Descrip'       => 'nullable|max:15',
             'IsSwipe'       => 'nullable',
             'Type'          => 'nullable',

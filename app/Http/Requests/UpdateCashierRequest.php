@@ -14,23 +14,23 @@ class UpdateCashierRequest extends FormRequest
     public function rules()
     {
         return [
-            'CashierID' => 'integer|unique:cashiers,CashierID,' . $this->cashier->id,
-            'Code' => 'string|max:50',
-            'LocationID' => 'integer',
-            'Name' => 'string|max:50',
-            'LogName' => 'string|max:10',
-            // 'Password' => 'nullable|string|max:10',
-            'Encode' => 'string|max:10',
-            'Type' => 'nullable|integer',
+
+            'Code'      => 'max:50|nullable',
+            'LocationID'=> 'nullable',
+            'Name'      => 'max:50|nullable',
+            'LogName'   => 'nullable|max:10',
+            'Password'  => 'nullable|max:10',
+            'Encode'    => 'nullable|max:10',
+            'Type'      => 'nullable',
         ];
     }
 
     public function attributes()
     {
         return [
-            'CashierID' => 'cashier ID',
+
             'LocationID' => 'location ID',
-            'LogName' => 'login name',
+            'LogName'    => 'login name',
         ];
     }
 }

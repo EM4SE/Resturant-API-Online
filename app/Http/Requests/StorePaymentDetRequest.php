@@ -14,7 +14,7 @@ class StorePaymentDetRequest extends FormRequest
     public function rules()
     {
         return [
-            'idx'        => 'nullable',
+            'Idx'        => 'nullable',
             'RowNo'               => 'nullable',
             'PayTypeID'           => 'nullable',
             'Amount'              => 'nullable',
@@ -55,7 +55,7 @@ class StorePaymentDetRequest extends FormRequest
     public function attributes()
     {
         return [
-            'idx'        => 'payment detail ID',
+            'Idx'        => 'payment detail ID',
             'RowNo'               => 'row number',
             'PayTypeID'           => 'payment type ID',
             'SDate'               => 'sale date',

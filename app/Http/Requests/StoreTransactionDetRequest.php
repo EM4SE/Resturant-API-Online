@@ -14,7 +14,7 @@ class StoreTransactionDetRequest extends FormRequest
     public function rules()
     {
         return [
-            'TransactionDetID'   => 'unique:transaction_dets,TransactionDetID',
+            'Idx'   => 'unique:transaction_dets,Idx',
             'ProductID'          => 'nullable',
             'ProductCode'        => 'nullable|max:25',
             'RefCode'            => 'nullable|max:25',
@@ -115,7 +115,7 @@ class StoreTransactionDetRequest extends FormRequest
     public function attributes()
     {
         return [
-            'TransactionDetID'   => 'transaction detail ID',
+            'Idx'   => 'transaction detail ID',
             'ProductID'          => 'product ID',
             'ProductCode'        => 'product code',
             'RefCode'            => 'reference code',

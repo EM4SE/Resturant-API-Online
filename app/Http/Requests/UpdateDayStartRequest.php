@@ -14,20 +14,19 @@ class UpdateDayStartRequest extends FormRequest
     public function rules()
     {
         return [
-            'idx' => 'integer|unique:day_starts,idx,' . $this->dayStart->id,
-            'LocationID' => 'integer',
-            'LocationIDBilling' => 'integer',
-            'DayStartCashierID' => 'integer',
-            'DayStart' => 'date',
-            'Amount' => 'numeric',
-            'StartSystemDate' => 'date',
-            'IsDayEnd' => 'boolean',
-            'DayEndCashierID' => 'integer',
-            'EndSystemDate' => 'date',
-            'DayEnd' => 'date',
-            'ZNo' => 'integer',
-            'CashInHand' => 'numeric',
-            'IsShiftStarted' => 'boolean',
+            'LocationID' => 'nullable|integer',
+            'LocationIDBilling' => 'nullable|integer',
+            'DayStartCashierID' => 'nullable|integer',
+            'DayStart' => 'nullable|date',
+            'Amount' => 'nullable|numeric',
+            'StartSystemDate' => 'nullable|date',
+            'IsDayEnd' => 'nullable|boolean',
+            'DayEndCashierID' => 'nullable|integer',
+            'EndSystemDate' => 'nullable|date',
+            'DayEnd' => 'nullable|date',
+            'ZNo' => 'nullable|integer',
+            'CashInHand' => 'nullable|numeric',
+            'IsShiftStarted' => 'nullable|boolean',
         ];
     }
 

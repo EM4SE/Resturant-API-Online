@@ -71,9 +71,17 @@ class CashierController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCashierRequest $request, Cashier $cashier)
+    public function update(UpdateCashierRequest $request, $cashierId)
     {
         try {
+            $cashier = Cashier::where('CashierID', $cashierId)->first();
+
+            if (!$cashier) {
+                return response()->json([
+                    'error' => 'Cashier not found',
+                ], 404);
+            }
+
             $data = $request->validated();
 
             // Hash the password if it's being updated
@@ -110,6 +118,52 @@ class CashierController extends Controller
             return response()->json([
                 'error' => 'Failed to delete cashier',
                 'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function filterByCashierId($cashierId)
+    {
+        try {
+            $cashier = Cashier::where('CashierID', $cashierId)->first();
+
+            if (!$cashier) {
+                return response()->json([
+                    'message' => 'No cashier found with the given CashierID'
+                ], 404);
+            }
+
+            // Cast Type to ensure it's returned as integer
+            $cashierArray = $cashier->toArray();
+            $cashierArray['Type'] = $cashier->Type !== null ? (int)$cashier->Type : null;
+
+            return response()->json($cashierArray);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => 'Failed to retrieve cashier',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function updateByCashierId(UpdateCashierRequest $request, $cashierId)
+    {
+        try {
+            $cashier = Cashier::where('CashierID', $cashierId)->firstOrFail();
+            $cashier->update($request->validated());
+
+            return response()->json([
+                'message' => 'Cashier updated successfully',
+                'cashier' => $cashier,
+            ]);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'Cashier not found',
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Failed to update cashier',
+                'message' => $e->getMessage(),
             ], 500);
         }
     }

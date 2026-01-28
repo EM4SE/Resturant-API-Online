@@ -59,26 +59,34 @@ class DayStartController extends Controller
             ], 500);
         }
     }
-
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource in storage using idx
      */
-    public function update(UpdateDayStartRequest $request, DayStart $dayStart)
+    public function update(UpdateDayStartRequest $request, $idx)
     {
         try {
+            // Find the record by idx
+            $dayStart = DayStart::where('idx', $idx)->firstOrFail();
+
+            // Update using validated request data
             $dayStart->update($request->validated());
 
             return response()->json([
                 'message' => 'Day start updated successfully',
                 'dayStart' => $dayStart,
             ]);
-        } catch (Exception $e) {
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'Day start not found',
+            ], 404);
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Failed to update day start',
                 'message' => $e->getMessage()
             ], 500);
         }
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -95,6 +103,71 @@ class DayStartController extends Controller
             return response()->json([
                 'error' => 'Failed to delete day start',
                 'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Filter DayStart by idx
+     */
+    public function filterByIdx($idx)
+    {
+        try {
+            $dayStart = DayStart::where('idx', $idx)->first(); // returns model or null
+
+            if (!$dayStart) {
+                return response()->json([
+                    'message' => 'No day start found with the given idx'
+                ], 404);
+            }
+
+            // Cast decimals to float to ensure JSON numbers
+            $dayStartArray = $dayStart->toArray();
+            $dayStartArray['Amount'] = $dayStart->Amount !== null ? (float)$dayStart->Amount : null;
+            $dayStartArray['CashInHand'] = $dayStart->CashInHand !== null ? (float)$dayStart->CashInHand : null;
+
+            $dayStartArray['StartSystemDate'] = $dayStart->StartSystemDate
+                ? \Carbon\Carbon::parse($dayStart->StartSystemDate)->toIso8601String()
+                : null;
+
+            $dayStartArray['EndSystemDate'] = $dayStart->EndSystemDate
+                ? \Carbon\Carbon::parse($dayStart->EndSystemDate)->toIso8601String()
+                : null;
+
+
+            $dayStartArray['IsDayEnd'] = (bool) $dayStart->IsDayEnd;
+            $dayStartArray['IsShiftStarted'] = (bool) $dayStart->IsShiftStarted;
+
+
+            return response()->json($dayStartArray);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => 'Failed to retrieve day start',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+
+    public function updateByIdx(UpdateDayStartRequest $request, $idx)
+    {
+        try {
+            $dayStart = DayStart::where('idx', $idx)->firstOrFail();
+            $dayStart->update($request->validated());
+
+            return response()->json([
+                'message' => 'Day start updated successfully',
+                'dayStart' => $dayStart,
+            ]);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'error' => 'Day start not found',
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Failed to update day start',
+                'message' => $e->getMessage(),
             ], 500);
         }
     }

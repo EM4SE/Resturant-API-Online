@@ -14,7 +14,7 @@ class UpdateInvCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'InvCategoryId' => 'integer|unique:inv_categories,InvCategoryId,' . $this->invCategory->id,
+            // 'InvCategoryId' => 'integer|unique:inv_categories,InvCategoryId,' . $this->invCategory->id,
             'InvCategoryName' => 'string|max:100',
         ];
     }
@@ -22,7 +22,7 @@ class UpdateInvCategoryRequest extends FormRequest
     public function attributes()
     {
         return [
-            'InvCategoryId' => 'inventory category ID',
+            // 'InvCategoryId' => 'inventory category ID',
             'InvCategoryName' => 'inventory category name',
         ];
     }

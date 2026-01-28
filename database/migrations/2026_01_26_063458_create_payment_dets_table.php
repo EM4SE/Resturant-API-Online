@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('payment_dets', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('idx')->unique();
+            $table->bigInteger('Idx')->unique();
             $table->bigInteger('RowNo')->nullable();
             $table->unsignedInteger('PayTypeID')->nullable();
             $table->decimal('Amount', 18, 4)->nullable();

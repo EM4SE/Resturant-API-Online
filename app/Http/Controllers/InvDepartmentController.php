@@ -6,6 +6,7 @@ use App\Models\InvDepartment;
 use App\Http\Requests\StoreInvDepartmentRequest;
 use App\Http\Requests\UpdateInvDepartmentRequest;
 use Exception;
+use Carbon\Carbon;
 
 class InvDepartmentController extends Controller
 {
@@ -67,12 +68,19 @@ class InvDepartmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateInvDepartmentRequest $request, InvDepartment $invDepartment)
+    public function update(UpdateInvDepartmentRequest $request, $invDepartmentID)
     {
         try {
+            $invDepartment = InvDepartment::where('InvDepartmentID', $invDepartmentID)->first();
+
+            if (!$invDepartment) {
+                return response()->json([
+                    'error' => 'Inventory department not found',
+                ], 404);
+            }
+
             $data = $request->validated();
             $data['ModifiedDate'] = now();
-
             $invDepartment->update($data);
 
             return response()->json([
@@ -104,6 +112,76 @@ class InvDepartmentController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'error' => 'Failed to delete inventory department',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+    public function filterByInvDepartmentID($invDepartmentID)
+    {
+        try {
+            $invDepartment = InvDepartment::where('InvDepartmentID', $invDepartmentID)->first();
+
+            if (!$invDepartment) {
+                return response()->json([
+                    'message' => 'No inventory department found with the given InvDepartmentID'
+                ], 404);
+            }
+
+            $invDepartmentArray = $invDepartment->toArray();
+
+            // ✅ Explicit casting for C#
+            $invDepartmentArray['IsDelete'] = (bool) $invDepartment->IsDelete;
+            $invDepartmentArray['DataTransfer'] = (bool) $invDepartment->DataTransfer;
+
+            $invDepartmentArray['CreatedUser'] = $invDepartment->CreatedUser !== null
+                ? (int) $invDepartment->CreatedUser
+                : null;
+
+            $invDepartmentArray['ModifiedUser'] = $invDepartment->ModifiedUser !== null
+                ? (int) $invDepartment->ModifiedUser
+                : null;
+
+            // ✅ ISO-8601 datetime
+            $invDepartmentArray['CreatedDate'] = $invDepartment->CreatedDate
+                ? Carbon::parse($invDepartment->CreatedDate)->toIso8601String()
+                : null;
+
+            $invDepartmentArray['ModifiedDate'] = $invDepartment->ModifiedDate
+                ? Carbon::parse($invDepartment->ModifiedDate)->toIso8601String()
+                : null;
+
+            return response()->json($invDepartmentArray);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => 'Failed to retrieve inventory department',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function updateByInvDepartmentID(UpdateInvDepartmentRequest $request, $invDepartmentID)
+    {
+        try {
+            $invDepartment = InvDepartment::where('InvDepartmentID', $invDepartmentID)->first();
+
+            if (!$invDepartment) {
+                return response()->json([
+                    'error' => 'Inventory department not found',
+                ], 404);
+            }
+
+            $data = $request->validated();
+            $data['ModifiedDate'] = now();
+            $invDepartment->update($data);
+
+            return response()->json([
+                'message' => 'Inventory department updated successfully',
+                'department' => $invDepartment,
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => 'Failed to update inventory department',
                 'message' => $e->getMessage()
             ], 500);
         }

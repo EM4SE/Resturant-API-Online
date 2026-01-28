@@ -14,7 +14,7 @@ class UpdateTransactionDetRequest extends FormRequest
     public function rules()
     {
         return [
-            'Idx' => 'integer|unique:transaction_dets,TransactionDetID,' . $this->transactionDet->id,
+            'Idx' => 'integer|unique:transaction_dets,Idx,' . $this->transactionDet->id,
             'ProductID' => 'integer',
             'ProductCode' => 'string|max:25',
             'RefCode' => 'string|max:25',

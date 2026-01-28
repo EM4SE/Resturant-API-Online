@@ -11,7 +11,7 @@ class PaymentDet extends Model
     use HasFactory;
 
     protected $fillable = [
-        'idx',
+        'Idx',
         'RowNo',
         'PayTypeID',
         'Amount',

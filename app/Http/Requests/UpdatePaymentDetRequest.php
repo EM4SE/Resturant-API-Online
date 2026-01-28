@@ -14,7 +14,7 @@ class UpdatePaymentDetRequest extends FormRequest
     public function rules()
     {
         return [
-            'idx' => 'integer',
+            'Idx' => 'integer',
             'RowNo' => 'integer',
             'PayTypeID' => 'integer',
             'Amount' => 'numeric',
@@ -55,7 +55,7 @@ class UpdatePaymentDetRequest extends FormRequest
     public function attributes()
     {
         return [
-            'idx' => 'payment detail ID',
+            'Idx' => 'payment detail ID',
             'RowNo' => 'row number',
             'PayTypeID' => 'payment type ID',
             'SDate' => 'sale date',

@@ -11,6 +11,7 @@ use App\Http\Controllers\PaymentDetController;
 use App\Http\Controllers\DayStartController;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\PaytypeController;
+use App\Http\Controllers\CountersController;
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
 // })->middleware('auth:sanctum');
@@ -25,3 +26,15 @@ Route ::apiResource('payment-dets', PaymentDetController::class);
 Route::apiResource('day-starts', DayStartController::class);
 Route::apiResource('cashiers', CashierController::class);
 Route::apiResource('paytypes', PaytypeController::class);
+Route::apiResource('counters', CountersController::class);
+
+Route::get('/day-starts/filter/{idx}', [DayStartController::class, 'filterByIdx']);
+Route::put('day-starts/{idx}', [DayStartController::class, 'updateByIdx']);
+Route::get('/cashiers/filter/{cashierId}', [CashierController::class, 'filterByCashierId']);
+Route::put('/cashiers/{cashierId}', [CashierController::class, 'updateByCashierId']);
+Route::get('/counters/filter/{idx}', [CountersController::class, 'filterByIdx']);
+Route::put('/counters/{idx}', [CountersController::class, 'updateByIdx']);
+Route::get('/inv-categories/filter/{invCategoryId}', [InvCategoryController::class, 'filterByInvCategoryId']);
+Route::put('/inv-categories/{invCategoryId}', [InvCategoryController::class, 'updateByInvCategoryId']);
+Route::get('/inv-departments/filter/{invDepartmentID}', [InvDepartmentController::class, 'filterByInvDepartmentID']);
+Route::put('/inv-departments/{invDepartmentID}', [InvDepartmentController::class, 'updateByInvDepartmentID']);

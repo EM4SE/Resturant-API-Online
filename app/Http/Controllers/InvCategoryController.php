@@ -63,9 +63,17 @@ class InvCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateInvCategoryRequest $request, InvCategory $invCategory)
+    public function update(UpdateInvCategoryRequest $request, $invCategoryId)
     {
         try {
+            $invCategory = InvCategory::where('InvCategoryId', $invCategoryId)->first();
+
+            if (!$invCategory) {
+                return response()->json([
+                    'error' => 'Inventory category not found',
+                ], 404);
+            }
+
             $invCategory->update($request->validated());
 
             return response()->json([
@@ -94,6 +102,28 @@ class InvCategoryController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'error' => 'Failed to delete inventory category',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+
+    public function filterByInvCategoryId($invCategoryId)
+    {
+        try {
+            $invCategory = InvCategory::where('InvCategoryId', $invCategoryId)->first();
+
+            if (!$invCategory) {
+                return response()->json([
+                    'message' => 'No inventory category found with the given InvCategoryId'
+                ], 404);
+            }
+
+            return response()->json($invCategory);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => 'Failed to retrieve inventory category',
                 'message' => $e->getMessage()
             ], 500);
         }

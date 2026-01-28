@@ -14,7 +14,7 @@ class UpdateProductMasterRequest extends FormRequest
     public function rules()
     {
         return [
-            'idx' => 'integer|unique:product_masters,ProductMasterID,' . $this->productMaster->id,
+            'idx' => 'integer|unique:product_masters,idx,' . $this->productMaster->id,
             'ProductID' => 'integer',
             'LocationID' => 'integer',
             'ProductCode' => 'string|max:25',
