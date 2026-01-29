@@ -63,9 +63,17 @@ class PaytypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePaytypeRequest $request, Paytype $paytype)
+    public function update(UpdatePaytypeRequest $request, $paymentID)
     {
         try {
+            $paytype = Paytype::where('PaymentID', $paymentID)->first();
+
+            if (!$paytype) {
+                return response()->json([
+                    'error' => 'Payment type not found',
+                ], 404);
+            }
+
             $paytype->update($request->validated());
 
             return response()->json([
@@ -94,6 +102,43 @@ class PaytypeController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'error' => 'Failed to delete payment type',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function filterByPaymentID($paymentID)
+    {
+        try {
+            $paytype = Paytype::where('PaymentID', $paymentID)->first();
+
+            if (!$paytype) {
+                return response()->json([
+                    'message' => 'No payment type found with the given PaymentID'
+                ], 404);
+            }
+
+            // Convert to array
+            $paytypeArray = $paytype->toArray();
+
+            // ✅ Cast for C# compatibility
+            $paytypeArray['IsSwipe'] = (bool) $paytype->IsSwipe;
+            $paytypeArray['IsRefundable'] = (bool) $paytype->IsRefundable;
+            $paytypeArray['IsActive'] = (bool) $paytype->IsActive;
+            $paytypeArray['IsBillCopy'] = (bool) $paytype->IsBillCopy;
+
+            $paytypeArray['Type'] = (int) $paytype->Type;
+            $paytypeArray['MaxLength'] = (int) $paytype->MaxLength;
+            $paytypeArray['OrderNo'] = (int) $paytype->OrderNo;
+
+            $paytypeArray['Rate'] = $paytype->Rate !== null
+                ? (float) $paytype->Rate
+                : null;
+
+            return response()->json($paytypeArray);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => 'Failed to retrieve payment type',
                 'message' => $e->getMessage()
             ], 500);
         }

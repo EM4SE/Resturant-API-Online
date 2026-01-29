@@ -63,9 +63,17 @@ class SysConfigController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSysConfigRequest $request, SysConfig $sysConfig)
+    public function update(UpdateSysConfigRequest $request, $idx)
     {
         try {
+            $sysConfig = SysConfig::where('idx', $idx)->first();
+
+            if (!$sysConfig) {
+                return response()->json([
+                    'error' => 'System configuration not found',
+                ], 404);
+            }
+
             $sysConfig->update($request->validated());
 
             return response()->json([
@@ -94,6 +102,26 @@ class SysConfigController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'error' => 'Failed to delete system configuration',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function filterByIdx($idx)
+    {
+        try {
+            $sysConfig = SysConfig::where('idx', $idx)->first();
+
+            if (!$sysConfig) {
+                return response()->json([
+                    'message' => 'No system configuration found with the given idx'
+                ], 404);
+            }
+
+            return response()->json($sysConfig);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => 'Failed to retrieve system configuration',
                 'message' => $e->getMessage()
             ], 500);
         }

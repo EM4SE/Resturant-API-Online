@@ -14,7 +14,7 @@ class UpdatePaytypeRequest extends FormRequest
     public function rules()
     {
         return [
-            'PaymentID' => 'integer|unique:paytypes,PaytypeID,' . $this->paytype?->id,
+            // 'PaymentID' => 'integer|unique:paytypes,PaytypeID,' . $this->paytype?->id,
             'Descrip' => 'string|max:15',
             'IsSwipe' => 'boolean',
             'Type' => 'integer',
@@ -23,7 +23,7 @@ class UpdatePaytypeRequest extends FormRequest
             'IsActive' => 'boolean',
             'IsBillCopy' => 'boolean',
             'PrintDescrip' => 'string|max:12',
-            'PreFix' => 'string|max:5',
+            'PreFix' => 'nullable|max:5',
             'MaxLength' => 'integer',
             'OrderNo' => 'integer',
         ];
@@ -32,7 +32,7 @@ class UpdatePaytypeRequest extends FormRequest
     public function attributes()
     {
         return [
-            'PaymentID' => 'payment type ID',
+            // 'PaymentID' => 'payment type ID',
             'Descrip' => 'description',
             'IsSwipe' => 'is swipe',
             'Type' => 'type',

@@ -14,7 +14,7 @@ class UpdateProductMasterRequest extends FormRequest
     public function rules()
     {
         return [
-            'idx' => 'integer|unique:product_masters,idx,' . $this->productMaster->id,
+            // 'idx' => 'integer|unique:product_masters,idx,' . $this->productMaster->id,
             'ProductID' => 'integer',
             'LocationID' => 'integer',
             'ProductCode' => 'string|max:25',
@@ -24,9 +24,9 @@ class UpdateProductMasterRequest extends FormRequest
             'ExpiaryDate' => 'nullable|date',
             'SerialNo' => 'nullable|string|max:200',
             'Stock' => 'numeric',
-            'ReferenceCode1' => 'string|max:25',
-            'ReferenceCode2' => 'string|max:25',
-            'ReferenceCode3' => 'string|max:25',
+            'ReferenceCode1' => 'nullable|max:25',
+            'ReferenceCode2' => 'nullable|max:25',
+            'ReferenceCode3' => 'nullable|max:25',
             'ProductName' => 'nullable|string|max:100',
             'NameOnInvoice' => 'string|max:50',
             'DepartmentID' => 'integer',
@@ -34,12 +34,12 @@ class UpdateProductMasterRequest extends FormRequest
             'SubCategoryID' => 'integer',
             'SubCategory2ID' => 'integer',
             'SupplierID' => 'integer',
-            'SearchColumn' => 'string|max:50',
+            'SearchColumn' => 'nullable|max:50',
             'BaseUnitOfMeasureID' => 'integer',
-            'UnitOfMeasureID' => 'integer',
-            'UnitOfMeasureName' => 'string|max:50',
+            'UnitOfMeasureID' => 'nullable',
+            'UnitOfMeasureName' => 'nullable|max:50',
             'ConvertFactor' => 'numeric',
-            'PackSize' => 'string|max:25',
+            'PackSize' => 'nullable|max:25',
             'CostPrice' => 'numeric',
             'AverageCost' => 'numeric',
             'SellingPrice' => 'numeric',
@@ -76,7 +76,7 @@ class UpdateProductMasterRequest extends FormRequest
     public function attributes()
     {
         return [
-            'idx' => 'product master ID',
+            // 'idx' => 'product master ID',
             'ProductID' => 'product ID',
             'LocationID' => 'location ID',
             'ProductCode' => 'product code',

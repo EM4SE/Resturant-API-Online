@@ -6,6 +6,7 @@ use App\Models\ProductMaster;
 use App\Http\Requests\StoreProductMasterRequest;
 use App\Http\Requests\UpdateProductMasterRequest;
 use Exception;
+use Carbon\Carbon;
 
 class ProductMasterController extends Controller
 {
@@ -63,9 +64,17 @@ class ProductMasterController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductMasterRequest $request, ProductMaster $productMaster)
+    public function update(UpdateProductMasterRequest $request, $idx)
     {
         try {
+            $productMaster = ProductMaster::where('idx', $idx)->first();
+
+            if (!$productMaster) {
+                return response()->json([
+                    'error' => 'Product master not found',
+                ], 404);
+            }
+
             $productMaster->update($request->validated());
 
             return response()->json([
@@ -94,6 +103,77 @@ class ProductMasterController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'error' => 'Failed to delete product master',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+    public function filterByIdx($idx)
+    {
+        try {
+            $productMaster = ProductMaster::where('idx', $idx)->first();
+
+            if (!$productMaster) {
+                return response()->json([
+                    'message' => 'No product master found with the given idx'
+                ], 404);
+            }
+
+            $productMasterArray = $productMaster->toArray();
+
+            $boolFields = [
+                'IsActive',
+                'IsBatch',
+                'IsPromotion',
+                'IsFreeIssue',
+                'IsExpiary',
+                'IsCountable',
+                'IsTax',
+                'IsSerial',
+                'IsStock',
+                'IsExtendedPropertiesOnSale',
+                'IsRawMaterial',
+                'IsPastMovement'
+            ];
+
+            foreach ($boolFields as $field) {
+                $productMasterArray[$field] = (bool) $productMaster->$field;
+            }
+
+            $decimalFields = [
+                'Stock',
+                'ConvertFactor',
+                'CostPrice',
+                'AverageCost',
+                'SellingPrice',
+                'WholeSalePrice',
+                'MinimumPrice',
+                'MaximumPrice',
+                'FixedDiscount',
+                'MaximumDiscount',
+                'FixedDiscountPercentage',
+                'MaximumDiscountPercentage'
+            ];
+
+            foreach ($decimalFields as $field) {
+                $productMasterArray[$field] = $productMaster->$field !== null
+                    ? (float) $productMaster->$field
+                    : null;
+            }
+
+            $dateFields = ['ProductDate', 'BatchDate'];
+
+            foreach ($dateFields as $field) {
+                $productMasterArray[$field] = $productMaster->$field
+                    ? Carbon::parse($productMaster->$field)->toIso8601String()
+                    : null;
+            }
+
+            return response()->json($productMasterArray);
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => 'Failed to retrieve product master',
                 'message' => $e->getMessage()
             ], 500);
         }
