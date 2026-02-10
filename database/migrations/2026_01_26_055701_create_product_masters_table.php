@@ -69,6 +69,7 @@ return new class extends Migration
             $table->unsignedInteger('BillingLocationID')->nullable();
             $table->boolean('IsRawMaterial')->nullable()->nullable();
             $table->boolean('IsPastMovement')->nullable();
+            $table->string('IdWithLocation', 150)->unique();
             $table->timestamps();
         });
     }

@@ -19,6 +19,7 @@ class StoreCountersRequest extends FormRequest
             'LocationID' => 'nullable|integer',
             'LocationCode' => 'nullable|string|max:50',
             'LocationName' => 'nullable|string|max:100',
+            'IdWithLocation' => 'required|string|max:150|unique:counters,IdWithLocation',
         ];
     }
 
@@ -30,6 +31,7 @@ class StoreCountersRequest extends FormRequest
             'LocationID' => 'location ID',
             'LocationCode' => 'location code',
             'LocationName' => 'location name',
+            'IdWithLocation' => 'ID with location',
         ];
     }
 }

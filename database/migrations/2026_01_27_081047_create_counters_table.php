@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('counters', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('Idx')->unique();
+            $table->bigInteger('Idx');
             $table->unsignedInteger('GroupOfCompanyID')->nullable();
             $table->unsignedInteger('LocationID')->nullable();
             $table->string('LocationCode', 50)->nullable();
             $table->string('LocationName', 100)->nullable();
+            $table->string('IdWithLocation', 150)->unique();
             $table->timestamps();
         });
     }

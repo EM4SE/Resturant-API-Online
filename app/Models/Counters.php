@@ -16,5 +16,6 @@ class Counters extends Model
         'LocationID',
         'LocationCode',
         'LocationName',
+        'IdWithLocation',
     ];
 }

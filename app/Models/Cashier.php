@@ -19,6 +19,7 @@ class Cashier extends Model
         // 'Password',
         'Encode',
         'Type',
+        'IdWithLocation'
     ];
 
     protected $casts = [

@@ -67,5 +67,6 @@ class ProductMaster extends Model
         'BillingLocationID',
         'IsRawMaterial',
         'IsPastMovement',
+        'IdWithLocation',
     ];
 }

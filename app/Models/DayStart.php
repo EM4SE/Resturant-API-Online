@@ -26,5 +26,6 @@ class DayStart extends Model
         'ZNo',
         'CashInHand',
         'IsShiftStarted',
+        'IdWithLocation',
     ];
 }

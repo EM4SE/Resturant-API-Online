@@ -28,6 +28,7 @@ class StoreDayStartRequest extends FormRequest
             'ZNo'                  => 'nullable',
             'CashInHand'           => 'nullable',
             'IsShiftStarted'       => 'nullable',
+            'IdWithLocation'       => 'unique:day_starts,IdWithLocation',
         ];
     }
 
@@ -45,6 +46,7 @@ class StoreDayStartRequest extends FormRequest
             'EndSystemDate'        => 'end system date',
             'DayEnd'               => 'day end date',
             'CashInHand'           => 'cash in hand',
+            'IsShiftStarted'       => 'is shift started',
         ];
     }
 }

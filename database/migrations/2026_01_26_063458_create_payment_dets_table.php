@@ -48,6 +48,7 @@ return new class extends Migration
             $table->boolean('IsDayEnd')->nullable();
             $table->unsignedInteger('UpdateUnitNo')->nullable();
             $table->date('ZDate')->nullable();
+            $table->unsignedInteger('DocumentID')->default(1);
             $table->timestamps();
         });
     }

@@ -22,6 +22,7 @@ class StoreCashierRequest extends FormRequest
             'Password'  => 'nullable|max:10',
             'Encode'    => 'nullable|max:10',
             'Type'      => 'nullable',
+            'IdWithLocation' => 'nullable|max:100',
         ];
     }
 

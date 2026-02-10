@@ -65,10 +65,10 @@ class CountersController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCountersRequest $request, $idx)
+    public function update(UpdateCountersRequest $request, $IdWithLocation)
     {
         try {
-            $counter = Counters::where('Idx', $idx)->first();
+            $counter = Counters::where('IdWithLocation', $IdWithLocation)->first();
 
             if (!$counter) {
                 return response()->json([
@@ -111,14 +111,14 @@ class CountersController extends Controller
     }
 
 
-    public function filterByIdx($idx)
+    public function filterByIdx($IdWithLocation)
     {
         try {
-            $counter = Counters::where('Idx', $idx)->first();
+            $counter = Counters::where('IdWithLocation', $IdWithLocation)->first();
 
             if (!$counter) {
                 return response()->json([
-                    'message' => 'No counter found with the given Idx'
+                    'message' => 'No counter found with the given IdWithLocation'
                 ], 404);
             }
 

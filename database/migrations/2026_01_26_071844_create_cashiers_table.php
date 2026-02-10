@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cashiers', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('CashierID')->unique();
+            $table->bigInteger('CashierID');
             $table->string('Code', 50)->nullable();
             $table->unsignedInteger('LocationID')->nullable();
             $table->string('Name', 50)->nullable();
@@ -21,6 +21,7 @@ return new class extends Migration
             // $table->string('Password', 10);
             $table->string('Encode', 10)->nullable();
             $table->smallInteger('Type')->nullable();
+            $table->string('IdWithLocation', 100)->unique();
             $table->timestamps();
         });
     }

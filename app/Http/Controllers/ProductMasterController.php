@@ -64,10 +64,10 @@ class ProductMasterController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductMasterRequest $request, $idx)
+    public function update(UpdateProductMasterRequest $request, $IdWithLocation)
     {
         try {
-            $productMaster = ProductMaster::where('idx', $idx)->first();
+            $productMaster = ProductMaster::where('IdWithLocation', $IdWithLocation)->first();
 
             if (!$productMaster) {
                 return response()->json([
@@ -109,14 +109,14 @@ class ProductMasterController extends Controller
     }
 
 
-    public function filterByIdx($idx)
+    public function filterByIdx($IdWithLocation)
     {
         try {
-            $productMaster = ProductMaster::where('idx', $idx)->first();
+            $productMaster = ProductMaster::where('IdWithLocation', $IdWithLocation)->first();
 
             if (!$productMaster) {
                 return response()->json([
-                    'message' => 'No product master found with the given idx'
+                    'message' => 'No product master found with the given IdWithLocation'
                 ], 404);
             }
 

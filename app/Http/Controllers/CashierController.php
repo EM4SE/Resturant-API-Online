@@ -71,10 +71,10 @@ class CashierController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCashierRequest $request, $cashierId)
+    public function update(UpdateCashierRequest $request, $IdWithLocation)
     {
         try {
-            $cashier = Cashier::where('CashierID', $cashierId)->first();
+            $cashier = Cashier::where('IdWithLocation', $IdWithLocation)->first();
 
             if (!$cashier) {
                 return response()->json([
@@ -122,10 +122,10 @@ class CashierController extends Controller
         }
     }
 
-    public function filterByCashierId($cashierId)
+    public function filterByCashierId($IdWithLocation)
     {
         try {
-            $cashier = Cashier::where('CashierID', $cashierId)->first();
+            $cashier = Cashier::where('IdWithLocation', $IdWithLocation)->first();
 
             if (!$cashier) {
                 return response()->json([

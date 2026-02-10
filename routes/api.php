@@ -12,6 +12,7 @@ use App\Http\Controllers\DayStartController;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\PaytypeController;
 use App\Http\Controllers\CountersController;
+use App\Http\Controllers\ShiftController;
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
 // })->middleware('auth:sanctum');
@@ -27,6 +28,7 @@ Route::apiResource('day-starts', DayStartController::class);
 Route::apiResource('cashiers', CashierController::class);
 Route::apiResource('paytypes', PaytypeController::class);
 Route::apiResource('counters', CountersController::class);
+Route::apiResource('shifts', ShiftController::class);
 
 Route::get('/day-starts/filter/{idx}', [DayStartController::class, 'filterByIdx']);
 // Route::put('day-starts/{idx}', [DayStartController::class, 'updateByIdx']);
@@ -41,3 +43,4 @@ Route::get('/inv-departments/filter/{invDepartmentID}', [InvDepartmentController
 Route::get('/paytypes/filter/{paymentID}', [PaytypeController::class, 'filterByPaymentID']);
 Route::get('/product-masters/filter/{idx}', [ProductMasterController::class, 'filterByIdx']);
 Route::get('/sys-configs/filter/{idx}', [SysConfigController::class, 'filterByIdx']);
+Route::get('/shifts/filter/{idx}', [ShiftController::class, 'filterByIdx']);

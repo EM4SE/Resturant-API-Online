@@ -70,6 +70,7 @@ class StoreProductMasterRequest extends FormRequest
             'BillingLocationID'                => 'nullable',
             'IsRawMaterial'                    => 'nullable',
             'IsPastMovement'                   => 'nullable',
+            'IdWithLocation'                   => 'nullable|max:150|unique:product_masters,IdWithLocation',
         ];
     }
 
@@ -106,6 +107,7 @@ class StoreProductMasterRequest extends FormRequest
             'MaximumPrice' => 'maximum price',
             'ProductDate' => 'product date',
             'BatchDate' => 'batch date',
+            'IdWithLocation' => 'ID with location',
         ];
     }
 }

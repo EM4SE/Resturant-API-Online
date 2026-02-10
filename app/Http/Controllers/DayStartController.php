@@ -62,11 +62,11 @@ class DayStartController extends Controller
     /**
      * Update the specified resource in storage using idx
      */
-    public function update(UpdateDayStartRequest $request, $idx)
+    public function update(UpdateDayStartRequest $request, $IdWithLocation)
     {
         try {
             // Find the record by idx
-            $dayStart = DayStart::where('idx', $idx)->firstOrFail();
+            $dayStart = DayStart::where('IdWithLocation', $IdWithLocation)->firstOrFail();
 
             // Update using validated request data
             $dayStart->update($request->validated());
@@ -110,10 +110,10 @@ class DayStartController extends Controller
     /**
      * Filter DayStart by idx
      */
-    public function filterByIdx($idx)
+    public function filterByIdx($IdWithLocation)
     {
         try {
-            $dayStart = DayStart::where('idx', $idx)->first(); // returns model or null
+            $dayStart = DayStart::where('IdWithLocation', $IdWithLocation)->first(); // returns model or null
 
             if (!$dayStart) {
                 return response()->json([

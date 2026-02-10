@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('day_starts', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('idx')->unique();
+            $table->bigInteger('idx');
             $table->unsignedInteger('LocationID')->nullable();
             $table->unsignedInteger('LocationIDBilling')->nullable();
             $table->bigInteger('DayStartCashierID')->nullable();
@@ -27,6 +27,7 @@ return new class extends Migration
             $table->bigInteger('ZNo')->nullable();
             $table->decimal('CashInHand', 18, 4)->nullable();
             $table->boolean('IsShiftStarted')->nullable();
+            $table->string('IdWithLocation', 150)->unique();
             $table->timestamps();
         });
     }
