@@ -13,6 +13,7 @@ use App\Http\Controllers\CashierController;
 use App\Http\Controllers\PaytypeController;
 use App\Http\Controllers\CountersController;
 use App\Http\Controllers\ShiftController;
+use App\Http\Controllers\AdvanceController;
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
 // })->middleware('auth:sanctum');
@@ -44,3 +45,6 @@ Route::get('/paytypes/filter/{paymentID}', [PaytypeController::class, 'filterByP
 Route::get('/product-masters/filter/{idx}', [ProductMasterController::class, 'filterByIdx']);
 Route::get('/sys-configs/filter/{idx}', [SysConfigController::class, 'filterByIdx']);
 Route::get('/shifts/filter/{idx}', [ShiftController::class, 'filterByIdx']);
+
+Route::apiResource('advances', AdvanceController::class);
+Route::get('/advances/filter/{idx}', [AdvanceController::class, 'filterByIdx']);
