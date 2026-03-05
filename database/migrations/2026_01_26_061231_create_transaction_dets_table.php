@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('transaction_dets', function (Blueprint $table) {
             $table->id();
-            $table->integer('Idx')->unique();
+            $table->integer('Idx');
             $table->bigInteger('ProductID')->nullable();
             $table->string('ProductCode', 25)->nullable();
             $table->string('RefCode', 25)->nullable();
